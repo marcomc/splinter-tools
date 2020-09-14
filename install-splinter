@@ -56,6 +56,9 @@ execute "cp" "-a" "${splinter_dir}/${config_file_example}" "${splinter_dir}/${co
 echo "Creating profile 'default'..."
 execute "cp" "-a" "${splinter_dir}/profiles/${default_profile_example}" "${splinter_dir}/profiles/${default_profile}"
 
+echo "Installing tools..."
+(execute "${splinter_dir}/splinter" "update" "tools") 1>/dev/null || exit 1
+
 echo "Removing temporary files..."
 execute "rm" "-rf" "${temp_dir}"
 
