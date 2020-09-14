@@ -62,4 +62,4 @@ echo "Installing tools..."
 echo "Removing temporary files..."
 execute "rm" "-rf" "${temp_dir}"
 
-echo "Installation successful! now go to ./'${splinter_dir}'!!"
+echo "Installation successful! now go to './${splinter_dir}'"
