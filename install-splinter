@@ -7,7 +7,7 @@ splinter_zip="${splinter_dir}.zip"
 splinter_archive="https://github.com/marcomc/splinter/archive/master.zip"
 default_profile="default"
 default_profile_example="default-example"
-config_file="splinter.conf"
+config_file="splinter.cfg"
 config_file_example="example-${config_file}"
 
 shell_join() {
