@@ -36,7 +36,7 @@ fi
 
 if "${export_homebrew_cask}"; then
   printf "Exporting Homebrew Cask apps list to %s..." ${homebrew_cask_apps_list_file}
-  brew cask list | grep '^[0-9]' -v > "${homebrew_cask_apps_list_file}"
+  brew list --cask | grep '^[0-9]' -v > "${homebrew_cask_apps_list_file}"
   printf " done!\n"
 fi
 
