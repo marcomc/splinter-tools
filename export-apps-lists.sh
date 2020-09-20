@@ -13,7 +13,7 @@ export_pip_packages=false
 mackup_backup=false
 macprefs_backup=false
 
-destination_dir="../files"
+destination_dir="../files/lists"
 homebrew_taps_list_file="${destination_dir}/homebrew_taps.txt"
 homebrew_packages_list_file="${destination_dir}/homebrew_packages.txt"
 homebrew_cask_apps_list_file="${destination_dir}/homebrew_cask_apps.txt"
