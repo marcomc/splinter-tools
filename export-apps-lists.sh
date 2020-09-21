@@ -40,7 +40,7 @@ function export_homebrew_packages {
 
 function export_homebrew_cask {
   if command -v brew >/dev/null 2>&1; then
-    printf "Exporting Homebrew Cask apps list to %s..." "${homebrew_cask_apps_list_file}"
+    printf "Exporting Homebrew Casks list to %s..." "${homebrew_cask_apps_list_file}"
     brew list --cask | grep '^[0-9]' -v > "${homebrew_cask_apps_list_file}"
     printf " done!\n"
   else
