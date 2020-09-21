@@ -9,9 +9,11 @@ export_homebrew_packages=true
 export_homebrew_cask=true
 export_mas_apps=true
 export_npm_global_packages=true
-export_pip_packages=false
-mackup_backup=false
-macprefs_backup=false
+export_pip_packages=true
+mackup_backup=true
+macprefs_backup=true
+export_ruby_user_gems=true
+
 
 destination_dir="../files/lists"
 homebrew_taps_list_file="${destination_dir}/homebrew_taps.txt"
@@ -20,6 +22,7 @@ homebrew_cask_apps_list_file="${destination_dir}/homebrew_cask_apps.txt"
 mas_apps_list_file="${destination_dir}/mas_apps.txt"
 npm_global_packages_list_file="${destination_dir}/npm_global_packages.json"
 pip_packages_list_file="${destination_dir}/pip_packages.txt"
+ruby_gems_list_file="${destination_dir}/ruby_gems.txt"
 macprefs_backup_dir="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Macprefs"
 
 if "${export_homebrew_packages}" or "${export_homebrew_cask}"; then
@@ -49,6 +52,7 @@ if "${export_mas_apps}"; then
   # ...
   printf " done!\n"
 fi
+
 if "${export_npm_global_packages}"; then
   printf "Exporting NPM Global packages list to %s..." ${npm_global_packages_list_file}
   npm list -g --depth=0 --json > "${npm_global_packages_list_file}"
@@ -74,7 +78,16 @@ if "${export_pip_packages}"; then
   # returns list like:
   # package==version
   # ...
-  # printf " done!\n"
+  printf " done!\n"
+fi
+
+if "${export_ruby_user_gems}"; then
+  printf "Exporting Ruby gems list to %s..." "${ruby_gems_list_file}"
+  gem list | grep -v 'default' |  sed 's/[(,)]//g' | cut -d "," -f1 | sed 's/ /,/g'  > "${ruby_gems_list_file}"
+  # returns list like:
+  # gem,version
+  # ...
+  printf " done!\n"
 fi
 
 if "${mackup_backup}"; then
