@@ -4,6 +4,30 @@
 # - Allow parameters to chose the Mackup storage engine/directory
 #
 #
+
+function show_usage {
+printf  "usage: %s [option] obejctive\n" "$0"
+cat << 'EOF'
+
+options:
+       -d  path/to/dest/dir           Destination directory to store the lists
+       --help                         Print help
+
+obejctive:
+       brew [taps|packages|casks|all] Export list of brew taps, packages and casks
+       mackup                         Export Mackup configfile
+       macprefs                       Export Macprefs backup
+       mas                            Export list of installed apps from MacAppStore
+       npm                            Export list of Node.js packages
+       pip                            Export list of user installed Python packages from Pip
+       ruby                           Export list of user installed Ruby gems
+       all                            Export all the above
+
+
+EOF
+  return 0
+}
+
 function setup_environment {
   [[ -z $destination_dir ]] && destination_dir='.' # default destination if no '-d' is specified
   homebrew_taps_list_file="${destination_dir}/homebrew_taps.txt"
@@ -22,7 +46,7 @@ function export_homebrew_taps {
     brew tap-info --installed | grep -v -e '^$' | grep -v 'From\|files' | cut -d: -f1 > "${homebrew_taps_list_file}"
     printf " done!\n"
   else
-    printf "[Error] brew is not installed"
+    printf ">>>>>>>>>> Error: brew is not installed"
     exit 1
   fi
 }
@@ -33,7 +57,7 @@ function export_homebrew_packages {
     brew list | grep '^[0-9]' -v > "${homebrew_packages_list_file}"
     printf " done!\n"
   else
-    printf "[Error] brew is not installed"
+    printf ">>>>>>>>>> Error: brew is not installed"
     exit 1
   fi
 }
@@ -44,7 +68,7 @@ function export_homebrew_cask {
     brew list --cask | grep '^[0-9]' -v > "${homebrew_cask_apps_list_file}"
     printf " done!\n"
   else
-    printf "[Error] brew is not installed"
+    printf ">>>>>>>>>> Error: brew is not installed"
     exit 1
   fi
 }
@@ -65,7 +89,7 @@ function export_mas_apps {
     # ...
     printf " done!\n"
   else
-    printf "[Error] mas is not installed"
+    printf ">>>>>>>>>> Error: mas is not installed"
     exit 1
   fi
 }
@@ -89,7 +113,7 @@ function export_npm_global_packages {
     # }
     printf " done!\n"
   else
-    printf "[Error] npm is not installed"
+    printf ">>>>>>>>>> Error: npm is not installed"
     exit 1
   fi
 }
@@ -103,7 +127,7 @@ function export_pip_packages {
     # ...
     printf " done!\n"
   else
-    printf "[Error] pip is not installed"
+    printf ">>>>>>>>>> Error: pip is not installed"
     exit 1
   fi
 }
@@ -117,7 +141,7 @@ function export_ruby_user_gems {
     # ...
     printf " done!\n"
   else
-    printf "[Error] gem is not installed"
+    printf ">>>>>>>>>> Error: gem is not installed"
     exit 1
   fi
 }
@@ -129,7 +153,7 @@ function mackup_backup {
     # use the configuration in ~/.mackup.cfg
     printf " done!\n"
   else
-    printf "[Error] Mackup is not installed"
+    printf ">>>>>>>>>> Error: Mackup is not installed"
     exit 1
   fi
 }
@@ -160,8 +184,12 @@ function main {
       destination_dir="$2"
       shift 2
       ;;
+    --help)
+      eval show_usage
+      exit 0
+      ;;
     -*)
-      echo "[Error] Invalid option: $1." 1>&2
+      echo ">>>>>>>>>> Error: Invalid option: $1." 1>&2
       exit 1
       ;;
   esac
@@ -169,7 +197,6 @@ function main {
   objective="$1"; shift
   case "$objective" in
     brew|homebrew)
-      shift
       brew_option=$1; # fetch the action's option
       # Process package options
       case $brew_option in
@@ -186,8 +213,7 @@ function main {
           export_requested="export_homebrew_all"
           ;;
         *)
-          echo "[Error] Incorrect option '$brew_option' for export objective'$objective' " 1>&2
-          eval show_usage 1>&2
+          echo ">>>>>>>>>> Error: Incorrect option '$brew_option' for export objective '$objective' " 1>&2
           exit 1
           ;;
         esac
@@ -218,14 +244,15 @@ function main {
       # nothing to do for now
       export_requested="export_all"
       ;;
+    help)
+      export_requested="show_usage"
+      ;;
     '')
-      echo "[Error] Missing export objective" 1>&2
-      eval show_usage 1>&2
+      echo ">>>>>>>>>> Error: Missing export objective" 1>&2
       exit 1
       ;;
     *)
-      echo "[Error] Invalid export objective '$objective'" 1>&2
-      eval show_usage 1>&2
+      echo ">>>>>>>>>> Error: Invalid export objective '$objective'" 1>&2
       exit 1
       ;;
   esac
