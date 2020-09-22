@@ -23,7 +23,9 @@ function setup_environment {
 }
 
 function from_keychain_to_cert {
-  printf ">>>>>>>>>> Creating %s keychain\n" "$keychain_file"
+  printf ">>>>>>>>>> Creating %s\n" "$keychain_file"
+  printf ">>>>>>>>>> %bRemove the Master Password from the keychain file%b\n" "$yellow" "$white"
+  printf ">>>>>>>>>> %bif you are using it for provisioning%b\n" "$yellow" "$white"
   security create-filevaultmaster-keychain -p "$KEYCHAIN_PASSWORD" "$keychain_file"
   printf ">>>>>>>>>> Extracting DER certificate %s from the keychain file\n" "$der_cert"
   security export -k "$keychain_file" -t certs -o "$der_cert"
