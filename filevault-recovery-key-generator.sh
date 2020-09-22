@@ -11,9 +11,7 @@ function abs_path {
 }
 
 function setup_environment {
-  green="\e[32m"
   yellow="\e[33m"
-  cyan="\e[36m"
   white="\e[39m"
 
   [[ -z "$keychain_name" ]] && keychain_name='FileVaultMaster'
@@ -26,26 +24,26 @@ function setup_environment {
 
 function from_keychain_to_cert {
 
-  printf "%b>>>>>>>>>>%b Creating %s keychain\n" "$green" "$white" "$keychain_file"
+  printf ">>>>>>>>>> Creating %s keychain\n" " "$keychain_file"
   security create-filevaultmaster-keychain -p "$KEYCHAIN_PASSWORD" "$keychain_file"
-  printf "%b>>>>>>>>>>%b Exporting DER certificate %s from %s keychain\n" "$green" "$white" "$der_cert" "$keychain_file"
+  printf ">>>>>>>>>> Extracting DER certificate %s from the keychain file\n" "$der_cert"
   security export -k "$keychain_file" -t certs -o "$der_cert"
 }
 
 function ask_for_private_key_secret {
   local keychain_password=""
   if [[ -z $KEYCHAIN_PASSWORD ]]; then
-    printf "%b>>>>>>>>>>%b Requesting the secret used to encript %s\n" "$green" "$white" "$keychain_file"
-    read -r -p ">>>>>>>>>> Insert your chosen secret: " -s keychain_password
+    printf ">>>>>>>>>> Requesting the secret used to encript %s\n" "$keychain_file"
+    read -r -p ">>>>>>>>>> Choose a 'FileVault Master Password Key': " -s keychain_password
     printf "\n"
     export KEYCHAIN_PASSWORD="$keychain_password"
-    printf "%b>>>>>>>>>>%b Keychain password saved in %s\n" "$cyan" "$white" "$keychain_secret_output"
+    printf ">>>>>>>>>> Keychain password saved in %s\n" "$keychain_secret_output"
     echo "$KEYCHAIN_PASSWORD" > "$keychain_secret_output"
     chmod 0600 "$keychain_secret_output"
-    printf "%b>>>>>>>>>> Store the keychain password in a safe place (i.e. Bitwarden, LastPass or 1Password)%b\n" "$yellow" "$white"
-    printf "%b>>>>>>>>>> then delete the file %s%b\n" "$yellow" "$keychain_secret_output" "$white"
+    printf ">>>>>>>>>> %bStore the keychain password in a safe place (i.e. Bitwarden, LastPass or 1Password)%b\n" "$yellow" "$white"
+    printf ">>>>>>>>>> %bthen delete the file %s%b\n" "$yellow" "$keychain_secret_output" "$white"
   else
-    printf "%b>>>>>>>>>>%b 'KEYCHAIN_PASSWORD' is already set\n" "$yellow" "$white"
+    printf ">>>>>>>>>> 'KEYCHAIN_PASSWORD' is already set\n"
   fi
 }
 
@@ -79,12 +77,12 @@ function main {
 
   [ ! -d "$destination_dir" ] &&  mkdir -p "$destination_dir"
   if [ -f "$keychain_file" ];then
-    printf "%b>>>>>>>>>>%b The keychain file '%s' already exists!\n" "$yellow" "$white" "$keychain_file"
+    printf ">>>>>>>>>> The keychain file '%s' already exists!\n" "$yellow" "$white" "$keychain_file"
     exit
   else
     eval ask_for_private_key_secret
     eval from_keychain_to_cert
-    printf "%b>>>>>>>>>>%b Opening the keychain '%s' for review\n" "$green" "$white" "$keychain_name"
+    printf ">>>>>>>>>> Opening the keychain '%s' for review\n" "$green" "$white" "$keychain_name"
     open "$keychain_file"
   fi
   open "$destination_dir"
