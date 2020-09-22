@@ -1,4 +1,4 @@
 files/
 *.cer
 *.keychain
-recovery-key-cert/
+filevault-recovery-key/

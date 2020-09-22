@@ -11,14 +11,14 @@ function abs_path {
 }
 
 function setup_environment {
-  red="\e[31m"
   green="\e[32m"
   yellow="\e[33m"
   cyan="\e[36m"
   white="\e[39m"
 
   [[ -z "$keychain_name" ]] && keychain_name='FileVaultMaster'
-  [[ -z "$destination_dir" ]] && destination_dir="$(pwd)/recovery-key-cert"
+  [[ -z "$destination_dir" ]] && destination_dir="$(pwd)/filevault-recovery-key"
+
   keychain_file="${destination_dir}/${keychain_name}.keychain"
   keychain_secret_output="${destination_dir}/${keychain_name}-keychain-password.txt"
   der_cert="${destination_dir}/${keychain_name}.der.cer"
