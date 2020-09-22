@@ -23,8 +23,7 @@ function setup_environment {
 }
 
 function from_keychain_to_cert {
-
-  printf ">>>>>>>>>> Creating %s keychain\n" " "$keychain_file"
+  printf ">>>>>>>>>> Creating %s keychain\n" "$keychain_file"
   security create-filevaultmaster-keychain -p "$KEYCHAIN_PASSWORD" "$keychain_file"
   printf ">>>>>>>>>> Extracting DER certificate %s from the keychain file\n" "$der_cert"
   security export -k "$keychain_file" -t certs -o "$der_cert"
@@ -77,12 +76,12 @@ function main {
 
   [ ! -d "$destination_dir" ] &&  mkdir -p "$destination_dir"
   if [ -f "$keychain_file" ];then
-    printf ">>>>>>>>>> The keychain file '%s' already exists!\n" "$yellow" "$white" "$keychain_file"
+    printf ">>>>>>>>>> The keychain file '%s' already exists!\n" "$keychain_file"
     exit
   else
     eval ask_for_private_key_secret
     eval from_keychain_to_cert
-    printf ">>>>>>>>>> Opening the keychain '%s' for review\n" "$green" "$white" "$keychain_name"
+    printf ">>>>>>>>>> Opening the keychain '%s' for review\n" "$keychain_name"
     open "$keychain_file"
   fi
   open "$destination_dir"
