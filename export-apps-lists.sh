@@ -6,24 +6,23 @@
 #
 
 function show_usage {
-printf  "usage: %s [option] obejctive\n" "$0"
+printf  "usage: %s [option] object\n" "$0"
 cat << 'EOF'
 
 options:
        -d  path/to/dest/dir           Destination directory to store the lists
        --help                         Print help
 
-obejctive:
+object:
        brew [taps|packages|casks|all] Export list of brew taps, packages and casks
-       mackup                         Export Mackup configfile
-       macprefs                       Export Macprefs backup
-       mas                            Export list of installed apps from MacAppStore
-       npm                            Export list of Node.js packages
-       pip                            Export list of user installed Python packages from Pip
-       ruby                           Export list of user installed Ruby gems
+       mackup [config|backup]         Export Mackup config file
+       macprefs [backup]              Export Macprefs backup
+       ruby [gems]                    Export list of user installed Ruby gems
+       mas [packages]                 Export list of installed apps from MacAppStore
+       npm [packages]                 Export list of Node.js packages
+       pip [packages]                 Export list of user installed Python packages from Pip
        all                            Export all the above
-
-
+       
 EOF
   return 0
 }
@@ -178,6 +177,11 @@ function export_all {
   # eval macprefs_backup
 }
 
+function option_error {
+  echo ">>>>>>>>>> Error: Incorrect option '$object_option' for export object '$object' " 1>&2
+  exit 1
+}
+
 function main {
   case "$1" in
     -d|--directory)
@@ -194,12 +198,12 @@ function main {
       ;;
   esac
 
-  objective="$1"; shift
-  case "$objective" in
+  object="$1";
+  object_option=$2; # fetch the action's option
+  case "$object" in
     brew|homebrew)
-      brew_option=$1; # fetch the action's option
       # Process package options
-      case $brew_option in
+      case $object_option in
         taps)
           export_requested="export_homebrew_taps"
           ;;
@@ -213,31 +217,81 @@ function main {
           export_requested="export_homebrew_all"
           ;;
         *)
-          echo ">>>>>>>>>> Error: Incorrect option '$brew_option' for export objective '$objective' " 1>&2
-          exit 1
+          export_requested="option_error"
           ;;
         esac
       ;;
     npm)
-      export_requested="export_npm_global_packages"
+      # Process package options
+      case $object_option in
+        packages|'')
+          export_requested="export_npm_global_packages"
+          ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       ;;
     pip)
-      export_requested="export_pip_packages"
+      # Process package options
+      case $object_option in
+        packages|'')
+          export_requested="export_pip_packages"
+          ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       ;;
-    ruby)
-      export_requested="export_ruby_user_gems"
+    ruby|gems)
+      # Process package options
+      case $object_option in
+        gems|'')
+          export_requested="export_ruby_user_gems"
+          ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       ;;
     mas)
-      export_requested="export_mas_apps"
+      # Process package options
+      case $object_option in
+        packages|'')
+          export_requested="export_mas_apps"
+          ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       ;;
     macprefs)
+      # Process package options
+      case $object_option in
+        # backup|'')
+        #   export_requested="macprefs_backup"
+        #   ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       # nothing to do for now
-      export_requested="macprefs_backup"
       exit 1
       ;;
     mackup)
+      # Process package options
+      case $object_option in
+      #   backup)
+      #     export_requested="mackup_backup"
+      #     ;;
+      #   config)
+      #     export_requested="export_mackup_config"
+      #     ;;
+        *)
+          export_requested="option_error"
+          ;;
+        esac
       # nothing to do for now
-      export_requested="mackup_backup"
       exit 1
       ;;
     all)
@@ -248,11 +302,11 @@ function main {
       export_requested="show_usage"
       ;;
     '')
-      echo ">>>>>>>>>> Error: Missing export objective" 1>&2
+      echo ">>>>>>>>>> Error: Missing export object" 1>&2
       exit 1
       ;;
     *)
-      echo ">>>>>>>>>> Error: Invalid export objective '$objective'" 1>&2
+      echo ">>>>>>>>>> Error: Invalid export object '$object'" 1>&2
       exit 1
       ;;
   esac
