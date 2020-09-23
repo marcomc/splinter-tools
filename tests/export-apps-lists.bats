@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load 'test_helper/test_helper.sh'
+load 'test_helper.sh'
 
 function setup {
   TEST_TEMP_DIR="$(mktemp -d)"
