@@ -67,7 +67,7 @@ function main {
         exit 1
         ;;
       \?)
-        echo ">>>>>>>>>> Error: Invalid Option '-$option'" 1>&2
+        echo ">>>>>>>>>> Error: Invalid option '-$option'" 1>&2
         exit 1
         ;;
     esac
@@ -75,7 +75,7 @@ function main {
 
   if [[ -n $1 ]]; then
     # if a parameter without `-` is passed
-    echo ">>>>>>>>>> Error: Invalid Option(s) '$*'" 1>&2
+    echo ">>>>>>>>>> Error: Invalid option(s) '$*'" 1>&2
     exit 1
   fi
 
