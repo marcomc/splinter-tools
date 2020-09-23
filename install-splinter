@@ -50,6 +50,9 @@ echo "Moving Splinter files to '${splinter_dir}'..."
 execute "mkdir" "-p" "${splinter_dir}"
 execute "mv" "${temp_dir}"/*/* "${splinter_dir}"
 
+echo "Remove 'tests' directory..."
+execute "rm" "-rf" "${splinter_dir}/tests"
+
 echo "Creating config file '${config_file}'..."
 execute "cp" "-a" "${splinter_dir}/${config_file_example}" "${splinter_dir}/${config_file}"
 

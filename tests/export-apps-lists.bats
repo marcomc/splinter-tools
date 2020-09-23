@@ -1,7 +1,5 @@
 #!/usr/bin/env bats
-load '/usr/local/lib/bats-support/load.bash'
-load '/usr/local/lib/bats-assert/load.bash'
-load '/usr/local/lib/bats-file/load.bash'
+load 'test_helper/test_helper.sh'
 
 function setup {
   TEST_TEMP_DIR="$(mktemp -d)"
@@ -25,6 +23,11 @@ function teardown {
   if [[ -f $ruby_gems_list ]]; then rm "$ruby_gems_list"; fi
   # to add macprefs
   # to add mackup
+}
+
+
+@test './export-apps-lists.sh is executable' {
+  assert_file_executable './export-apps-lists.sh'
 }
 
 function invalid_argument_test {
