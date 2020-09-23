@@ -52,26 +52,32 @@ function main {
     case "$option" in
       d)
         destination_dir="$(abs_path "$OPTARG")"
+        shift 2
         ;;
       n)
         keychain_name="${OPTARG}"
+        shift 2
         ;;
       h)
         printf "Usage: %s [ -d path/to/destination/dir ] [ -n KeychainName ]\n" "$0"
         exit 0
         ;;
-      \?)
-        echo ">>>>>>>>>> Error: Invalid Option '-$option'" 1>&2
-        eval show_usage 1>&2
-        exit 1
-        ;;
       :)
         echo ">>>>>>>>>> Error: Option '-$option' is missing an argument" 1>&2
-        eval show_usage 1>&2
+        exit 1
+        ;;
+      \?)
+        echo ">>>>>>>>>> Error: Invalid Option '-$option'" 1>&2
         exit 1
         ;;
     esac
   done
+
+  if [[ -n $1 ]]; then
+    # if a parameter without `-` is passed
+    echo ">>>>>>>>>> Error: Invalid Option(s) '$*'" 1>&2
+    exit 1
+  fi
 
   eval setup_environment
 
