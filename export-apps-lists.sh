@@ -22,7 +22,7 @@ object:
        npm [packages]                 Export list of Node.js packages
        pip [packages]                 Export list of user installed Python packages from Pip
        all                            Export all the above
-       
+
 EOF
   return 0
 }
@@ -208,10 +208,10 @@ function main {
           export_requested="export_homebrew_taps"
           ;;
         casks)
-          export_requested="export_homebrew_packages"
+          export_requested="export_homebrew_cask"
           ;;
         packages)
-          export_requested="export_homebrew_cask"
+          export_requested="export_homebrew_packages"
           ;;
         all|'')
           export_requested="export_homebrew_all"
@@ -276,7 +276,6 @@ function main {
           ;;
         esac
       # nothing to do for now
-      exit 1
       ;;
     mackup)
       # Process package options
@@ -292,7 +291,6 @@ function main {
           ;;
         esac
       # nothing to do for now
-      exit 1
       ;;
     all)
       # nothing to do for now
