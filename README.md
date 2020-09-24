@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.com/marcomc/splinter-tools.png)](https://api.travis-ci.com/marcomc/splinter-tools)
+[![Build Status](https://api.travis-ci.com/marcomc/splinter-tools.png)](https://www.travis-ci.com/github/marcomc/splinter-tools/builds)
 # splinter-tools
 Additional tools for Splinter provisioning
 
