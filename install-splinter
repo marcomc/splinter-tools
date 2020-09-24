@@ -53,6 +53,8 @@ execute "mv" "${temp_dir}"/*/* "${splinter_dir}"
 echo "Remove 'tests' directory and files..."
 [[ -d ${splinter_dir}/tests ]] && execute "rm" "-rf" "${splinter_dir}/tests"
 [[ -f ${splinter_dir}/.travis.yml ]] && execute "rm" "${splinter_dir}/.travis.yml"
+[[ -f ${splinter_dir}/.gitignore ]] && execute "rm" "${splinter_dir}/.gitignore"
+[[ -f ${splinter_dir}/.gitmodules ]] && execute "rm" "${splinter_dir}/.gitmodules"
 
 echo "Creating config file '${config_file}'..."
 execute "cp" "-a" "${splinter_dir}/${config_file_example}" "${splinter_dir}/${config_file}"
