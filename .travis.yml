@@ -13,7 +13,7 @@ language: bash
 
 before_install:
   - brew update
-  - brew install bats-core
+  - brew install bats-core mas
 
 script:
   - bats tests
