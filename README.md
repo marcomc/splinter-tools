@@ -1,7 +1,7 @@
 # splinter-tools
 Additional tools for Splinter provisioning
 
-# Units test
+# Unit testing
 
 BATS scripts are contained in './tests'
 
