@@ -19,7 +19,7 @@ object:
        macprefs [backup]              Export Macprefs backup
        ruby [gems]                    Export list of user installed Ruby gems
        mas [packages]                 Export list of installed apps from MacAppStore
-       npm [packages]                 Export list of Node.js packages
+       npm [packages]                 Export list of NPM packages
        pip [packages]                 Export list of user installed Python packages from Pip
        all                            Export all the above
 
@@ -178,7 +178,7 @@ function export_all {
 }
 
 function option_error {
-  echo ">>>>>>>>>> Error: Incorrect option '$object_option' for export object '$object' " 1>&2
+  echo ">>>>>>>>>> Error: Invalid option '$object_option' for export object '$object' " 1>&2
   exit 1
 }
 
