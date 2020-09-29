@@ -15,8 +15,6 @@ options:
 
 object:
        brew [taps|packages|casks|all] Export list of brew taps, packages and casks
-       mackup [config|backup]         Export Mackup config file
-       macprefs [backup]              Export Macprefs backup
        ruby [gems]                    Export list of user installed Ruby gems
        mas [packages]                 Export list of installed apps from MacAppStore
        npm [packages]                 Export list of NPM packages
@@ -36,7 +34,6 @@ function setup_environment {
   npm_global_packages_list_file="${destination_dir}/npm_global_packages.json"
   pip_packages_list_file="${destination_dir}/pip_packages.txt"
   ruby_gems_list_file="${destination_dir}/ruby_gems.txt"
-  macprefs_backup_dir="$HOME/Library/Mobile Documents/com~apple~CloudDocs/Macprefs"
 }
 
 function export_homebrew_taps {
@@ -145,36 +142,12 @@ function export_ruby_user_gems {
   fi
 }
 
-function mackup_backup {
-  if command -v mackup >/dev/null 2>&1; then
-    printf "Backing up dotfiles with mackup to %s..." "${pip_packages_list_file}"
-    mackup backup -f
-    # use the configuration in ~/.mackup.cfg
-    printf " done!\n"
-  else
-    printf ">>>>>>>>>> Error: Mackup is not installed"
-    exit 1
-  fi
-}
-
-function macprefs_backup {
-  if command -v macprefs >/dev/null 2>&1; then
-    #  Any preferences Mackup backs up won't be backed up by Macprefs
-    printf "Backing up System Preferences with macprefs to %s..." "${macprefs_backup_dir}"
-    sudo macprefs_backup_dir="${macprefs_backup_dir}" macprefs backup
-    # use the env value of macprefs_backup_dir as a backup dir
-    printf " done!\n"
-  fi
-}
-
 function export_all {
   eval export_homebrew_all
   eval export_mas_apps
   eval export_npm_global_packages
   eval export_pip_packages
   eval export_ruby_user_gems
-  # eval mackup_backup
-  # eval macprefs_backup
 }
 
 function option_error {
@@ -265,35 +238,7 @@ function main {
           ;;
         esac
       ;;
-    macprefs)
-      # Process package options
-      case $object_option in
-        # backup|'')
-        #   export_requested="macprefs_backup"
-        #   ;;
-        *)
-          export_requested="option_error"
-          ;;
-        esac
-      # nothing to do for now
-      ;;
-    mackup)
-      # Process package options
-      case $object_option in
-      #   backup)
-      #     export_requested="mackup_backup"
-      #     ;;
-      #   config)
-      #     export_requested="export_mackup_config"
-      #     ;;
-        *)
-          export_requested="option_error"
-          ;;
-        esac
-      # nothing to do for now
-      ;;
     all)
-      # nothing to do for now
       export_requested="export_all"
       ;;
     help)
