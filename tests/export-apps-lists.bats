@@ -21,8 +21,6 @@ function teardown {
   if [[ -f $npm_global_packages_list ]]; then rm "$npm_global_packages_list"; fi
   if [[ -f $pip_packages_list ]]; then rm "$pip_packages_list"; fi
   if [[ -f $ruby_gems_list ]]; then rm "$ruby_gems_list"; fi
-  # to add macprefs
-  # to add mackup
 }
 
 
@@ -63,8 +61,6 @@ function valid_argument_test {
   assert_file_exist "$npm_global_packages_list"
   assert_file_exist "$pip_packages_list"
   assert_file_exist "$ruby_gems_list"
-  # to add macprefs
-  # to add mackup
 }
 
 @test './export-apps-lists.sh -d path/to/dir all' {
@@ -167,39 +163,3 @@ function valid_argument_test {
 @test './export-apps-lists.sh pip <invalid-argument>' {
   eval invalid_argument_test 'pip'
 }
-
-# @test './export-apps-lists.sh mackup (no argument)' {
-#   eval no_argument_test 'mackup'
-# }
-
-# @test './export-apps-lists.sh mackup config' {
-#   run ./export-apps-lists.sh mackup config
-#   assert
-# }
-#
-# @test './export-apps-lists.sh mackup backup' {
-#   run ./export-apps-lists.sh mackup backup
-#   assert
-# }
-#
-# @test './export-apps-lists.sh mackup <invalid-argument>' {
-#   eval invalid_argument_test 'mackup'
-# }
-#
-# @test './export-apps-lists.sh macprefs (no argument)' {
-#   eval no_argument_test 'macprefs'
-# }
-
-# @test './export-apps-lists.sh macprefs config' {
-#   run ./export-apps-lists.sh macprefs config
-#   assert
-# }
-#
-# @test './export-apps-lists.sh macprefs backup' {
-#   run ./export-apps-lists.sh macprefs backup
-#   assert
-# }
-# #
-# @test './export-apps-lists.sh macprefs <invalid-argument>' {
-#   eval invalid_argument_test 'macprefs'
-# }
