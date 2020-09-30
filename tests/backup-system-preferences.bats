@@ -50,6 +50,28 @@ function teardown {
   assert_failure
 }
 
+@test "./backup-system-preferences.sh install - expected to create './macprefs'" {
+  run ./backup-system-preferences.sh install
+  assert_output --partial 'Installing a local copy of Macprefs'
+  assert_dir_exist "$default_macprefs_dir"
+  assert_success
+}
+
+@test "./backup-system-preferences.sh -m custom_macprefs_dir install - expected to create 'custom_macprefs_dir'" {
+  run ./backup-system-preferences.sh -m "$custom_macprefs_dir" install
+  assert_output --partial 'Installing a local copy of Macprefs'
+  assert_dir_exist "$custom_macprefs_dir"
+  assert_success
+}
+
+@test "./backup-system-preferences.sh install (when macprefs is already installed) - expected NOT to fail but not proceed with the installation" {
+  run ./backup-system-preferences.sh install
+  run ./backup-system-preferences.sh install
+  assert_output --partial 'Macprefs is already installed'
+  assert_dir_exist "$default_macprefs_dir"
+  assert_success
+}
+
 @test "./backup-system-preferences.sh backup - expected to create './system_preferences'" {
   run ./backup-system-preferences.sh backup
     assert_output --partial 'Running macprefs backup'

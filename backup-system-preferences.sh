@@ -18,6 +18,7 @@ options:
 action:
        backup                     Export system config file with Macprefs
        restore                    Restore system config file with Macprefs
+       install                    Install Macprefs without any further action
 EOF
   return 0
 }
@@ -105,6 +106,9 @@ function main {
     restore)
       action_requested="restore"
       ;;
+    install)
+      # will install macprefs without triggering any action
+      ;;
     '')
       echo ">>>>>>>>>> Error: Missing action" 1>&2
       eval show_usage
@@ -117,7 +121,11 @@ function main {
   esac
 
   eval setup_environment
-  [[ ! -x $macprefs_tool ]] && eval install_macprefs
+  if [[ ! -x $macprefs_tool ]]; then
+    eval install_macprefs  1>&2
+  elif [[ -z $action_requested ]]; then
+    echo ">>>>>>>>>> Macprefs is already installed" 1>&2
+  fi
   [[ -n $action_requested ]] && eval run_macprefs "$action_requested"
   exit 0
 }
