@@ -10,15 +10,15 @@ printf  "usage: %s [option] action\n" "$0"
 cat << 'EOF'
 
 options:
-       -d|--directory directory   Destination directory to store the lists
-       -r|--repo      repo_url    repo url for Macpref installation
-       -m|--macprefs  directory   path for Macpref installation directory
-       --help                     Print help
+       -d directory   Destination directory to store the lists
+       -r repo_url    repo url for Macpref installation
+       -m directory   path for Macpref installation directory
+       -h             Print help
 
 action:
-       backup                     Export system config file with Macprefs
-       restore                    Restore system config file with Macprefs
-       install                    Install Macprefs without any further action
+       backup         Export system config file with Macprefs
+       restore        Restore system config file with Macprefs
+       install        Install Macprefs without any further action
 EOF
   return 0
 }
@@ -75,30 +75,38 @@ function run_macprefs {
 }
 
 function main {
-  case "$1" in
-    -d|--directory)
-      backup_dir="$2"
-      shift 2
-      ;;
-    -r|--repo)
-      macprefs_repo="$2"
-      shift 2
-      ;;
-    -m|--macprefs)
-      macprefs_dir="$2"
-      shift 2
-      ;;
-    --help)
-      eval show_usage
-      exit 0
-      ;;
-    -*)
-      echo ">>>>>>>>>> Error: Invalid option: $1." 1>&2
-      exit 1
-      ;;
-  esac
-
-  action="$1";
+  while getopts ":d:r:m:h" option; do
+    case "$option" in
+      d)
+        backup_dir="$OPTARG"
+        ;;
+      r)
+        macprefs_repo="$OPTARG"
+        ;;
+      m)
+        macprefs_dir="$OPTARG"
+        ;;
+      h)
+        eval show_usage
+        exit 0
+        ;;
+      \?)
+        echo ">>>>>>>>>> Error: Invalid option: $OPTARG." 1>&2
+        exit 1
+        ;;
+      :)
+        echo ">>>>>>>>>> Error: Missing argument for option: '-${OPTARG}'." 1>&2
+        exit 1
+        ;;
+    esac
+  done
+  #
+  shift $(( OPTIND - 1 ))
+  action="$1"; shift
+  if [[ -n $* ]];then
+    echo ">>>>>>>>>> Error: Provided unknow parameter: $1" 1>&2
+    exit 1
+  fi
   case "$action" in
     backup)
       action_requested="backup"

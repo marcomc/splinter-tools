@@ -27,8 +27,8 @@ function teardown {
   assert_file_executable './backup-system-preferences.sh'
 }
 
-@test './backup-system-preferences.sh --help' {
-  run ./backup-system-preferences.sh --help
+@test './backup-system-preferences.sh -h - expected to print usage messages' {
+  run ./backup-system-preferences.sh -h
   assert_output --partial 'usage:'
 }
 
@@ -118,4 +118,11 @@ function teardown {
   run ./backup-system-preferences.sh -r "$incorrect_macprefs_repo" backup
   assert_output --partial 'Downloading'
   assert_failure
+}
+
+@test './backup-system-preferences.sh -d custom_backup_dir -m custom_macprefs_dir -r custom_macprefs_repo restore - expected to complete successfully' {
+  run ./backup-system-preferences.sh -d "$custom_backup_dir" -m "$custom_macprefs_dir" -r "$custom_macprefs_repo" backup
+  run ./backup-system-preferences.sh -d "$custom_backup_dir" -m "$custom_macprefs_dir" -r "$custom_macprefs_repo" restore
+  assert_output --partial 'Running macprefs restore'
+  assert_success
 }
