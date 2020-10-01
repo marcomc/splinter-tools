@@ -36,23 +36,23 @@ function install_macprefs {
   macprefs_archive='macprefs.zip'
   macprefs_archive_url="$macprefs_repo/archive/master.zip"
 
-  printf ">>>>>>>>>> Installing a local copy of Macprefs\n"
+  printf "Installing a local copy of Macprefs\n"
 
-  printf ">>>>>>>>>> Downloading Macprefs into '%s/%s'\n" "$temp_dir" "$macprefs_archive"
+  printf "Downloading Macprefs into '%s/%s'\n" "$temp_dir" "$macprefs_archive"
   curl -H 'Cache-Control: no-cache' -fsSL "$macprefs_archive_url" -o "${temp_dir}/${macprefs_archive}" || exit 1
 
-  printf ">>>>>>>>>> Decompressing Macprefs archive into '%s'\n" "$temp_dir"
+  printf "Decompressing Macprefs archive into '%s'\n" "$temp_dir"
   unzip -qq "${temp_dir}/${macprefs_archive}" -d "${temp_dir}" || exit 1
 
-  printf ">>>>>>>>>> Installing Macprefs files to '%s'\n" "$macprefs_dir"
+  printf "Installing Macprefs files to '%s'\n" "$macprefs_dir"
   [[ ! -d $macprefs_dir ]] && mkdir -p "$macprefs_dir"
 
   rsync --exclude .git --exclude .gitmodules --exclude .gitignore --exclude .travis.yml --exclude tests/ -rlWuv "$temp_dir"/*/* "$macprefs_dir" || exit
 
-  printf ">>>>>>>>>> Removing temporary files\n"
+  printf "Removing temporary files\n"
   rm -rf "$temp_dir" || exit
 
-  printf ">>>>>>>>>> Installation successful!\n"
+  printf "Installation successful!\n"
 
 }
 
@@ -65,7 +65,7 @@ function run_macprefs {
   fi
   if [[ -x $macprefs_tool ]]; then
     #  Any preferences Mackup backs up won't be backed up by Macprefs
-    printf ">>>>>>>>>> Running macprefs $action using '%s'..." "${backup_dir}"
+    printf "Running macprefs $action using '%s'..." "${backup_dir}"
     MACPREFS_BACKUP_DIR="$backup_dir" eval "$macprefs_tool" -v "$action" > "$macprefs_log" 2>&1
     printf "   done!\n"
   else
