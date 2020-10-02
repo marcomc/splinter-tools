@@ -5,8 +5,8 @@ set -u
 splinter_dir="splinter"
 splinter_zip="${splinter_dir}.zip"
 splinter_archive="https://github.com/marcomc/splinter/archive/master.zip"
-default_profile="default"
-default_profile_example="default-example"
+base_profile="base"
+base_profile_example="base-example"
 config_file="splinter.cfg"
 config_file_example="example-${config_file}"
 
@@ -59,8 +59,8 @@ echo "Remove 'tests' directory and files..."
 echo "Creating config file '${config_file}'..."
 execute "cp" "-a" "${splinter_dir}/${config_file_example}" "${splinter_dir}/${config_file}"
 
-echo "Creating profile 'default'..."
-execute "cp" "-a" "${splinter_dir}/profiles/${default_profile_example}" "${splinter_dir}/profiles/${default_profile}"
+echo "Creating profile 'base'..."
+execute "cp" "-a" "${splinter_dir}/profiles/${base_profile_example}" "${splinter_dir}/profiles/${base_profile}"
 
 echo "Installing tools..."
 (execute "${splinter_dir}/splinter" "update" "tools") 1> /dev/null || exit 1
