@@ -10,6 +10,7 @@ function setup {
   splinter_gitignore="$splinter_dir/.gitignore"
   splinter_gitmodules="$splinter_dir/.gitmodules"
   export_apps_lists_script="$splinter_tools_dir/export-apps-lists.sh"
+  backup_system_preferences_script="$splinter_tools_dir/backup-system-preferences.sh"
   filevault_recovery_key_generator_script="$splinter_tools_dir/filevault-recovery-key-generator.sh"
   install_splinter_script="$splinter_tools_dir/install-splinter"
 }
@@ -34,4 +35,5 @@ function teardown {
   assert_file_executable "$export_apps_lists_script"
   assert_file_executable "$filevault_recovery_key_generator_script"
   assert_file_executable "$install_splinter_script"
+  assert_file_executable "$backup_system_preferences_script"
 }
