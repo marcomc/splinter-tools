@@ -7,8 +7,6 @@ splinter_zip="${splinter_dir}.zip"
 splinter_archive="https://github.com/marcomc/splinter/archive/master.zip"
 base_profile="base"
 base_profile_example="base-example"
-config_file="splinter.cfg"
-config_file_example="example-${config_file}"
 
 shell_join() {
   local arg
@@ -55,9 +53,6 @@ echo "Remove 'tests' directory and files..."
 [[ -f ${splinter_dir}/.travis.yml ]] && execute "rm" "${splinter_dir}/.travis.yml"
 [[ -f ${splinter_dir}/.gitignore ]] && execute "rm" "${splinter_dir}/.gitignore"
 [[ -f ${splinter_dir}/.gitmodules ]] && execute "rm" "${splinter_dir}/.gitmodules"
-
-echo "Creating config file '${config_file}'..."
-execute "cp" "-a" "${splinter_dir}/${config_file_example}" "${splinter_dir}/${config_file}"
 
 echo "Creating profile 'base'..."
 execute "cp" "-a" "${splinter_dir}/profiles/${base_profile_example}" "${splinter_dir}/profiles/${base_profile}"
