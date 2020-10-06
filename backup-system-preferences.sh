@@ -87,7 +87,7 @@ function main {
         macprefs_dir="$OPTARG"
         ;;
       h)
-        eval show_usage
+        show_usage
         exit 0
         ;;
       \?)
@@ -119,7 +119,7 @@ function main {
       ;;
     '')
       echo ">>>>>>>>>> Error: Missing action" 1>&2
-      eval show_usage
+      show_usage
       exit 1
       ;;
     *)
@@ -128,13 +128,13 @@ function main {
       ;;
   esac
 
-  eval setup_environment
+  setup_environment
   if [[ ! -x $macprefs_tool ]]; then
-    eval install_macprefs  1>&2
+    install_macprefs  1>&2
   elif [[ -z $action_requested ]]; then
     echo ">>>>>>>>>> Macprefs is already installed" 1>&2
   fi
-  [[ -n $action_requested ]] && eval run_macprefs "$action_requested"
+  [[ -n $action_requested ]] && run_macprefs "$action_requested"
   exit 0
 }
 

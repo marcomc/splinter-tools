@@ -70,9 +70,9 @@ function export_homebrew_cask {
 }
 
 function export_homebrew_all {
-  eval export_homebrew_taps
-  eval export_homebrew_packages
-  eval export_homebrew_cask
+  export_homebrew_taps
+  export_homebrew_packages
+  export_homebrew_cask
 }
 
 function export_mas_apps {
@@ -143,11 +143,11 @@ function export_ruby_user_gems {
 }
 
 function export_all {
-  eval export_homebrew_all
-  eval export_mas_apps
-  eval export_npm_global_packages
-  eval export_pip_packages
-  eval export_ruby_user_gems
+  export_homebrew_all
+  export_mas_apps
+  export_npm_global_packages
+  export_pip_packages
+  export_ruby_user_gems
 }
 
 function option_error {
@@ -162,7 +162,7 @@ function main {
       shift 2
       ;;
     --help)
-      eval show_usage
+      show_usage
       exit 0
       ;;
     -*)
@@ -254,7 +254,7 @@ function main {
       ;;
   esac
 
-  eval setup_environment
+  setup_environment
   [[ -n $export_requested ]] && eval "$export_requested"
   exit 0
 }

@@ -79,15 +79,15 @@ function main {
     exit 1
   fi
 
-  eval setup_environment
+  setup_environment
 
   [ ! -d "$destination_dir" ] &&  mkdir -p "$destination_dir"
   if [ -f "$keychain_file" ];then
     printf ">>>>>>>>>> The keychain file '%s' already exists!\n" "$keychain_file"
     exit
   else
-    eval ask_for_private_key_secret
-    eval from_keychain_to_cert
+    ask_for_private_key_secret
+    from_keychain_to_cert
   fi
 }
 
