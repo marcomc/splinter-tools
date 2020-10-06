@@ -47,7 +47,7 @@ function install_macprefs {
   printf "Installing Macprefs files to '%s'\n" "$macprefs_dir"
   [[ ! -d $macprefs_dir ]] && mkdir -p "$macprefs_dir"
 
-  rsync --exclude .git --exclude .gitmodules --exclude .gitignore --exclude .travis.yml --exclude tests/ -rlWuv "$temp_dir"/*/* "$macprefs_dir" || exit
+  rsync --exclude .git --exclude .gitmodules --exclude .gitignore --exclude .travis.yml --exclude test/ -rlWuv "$temp_dir"/*/* "$macprefs_dir" || exit
 
   printf "Removing temporary files\n"
   rm -rf "$temp_dir" || exit

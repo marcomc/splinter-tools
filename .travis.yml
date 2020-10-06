@@ -13,4 +13,4 @@ before_install:
   - brew install bats-core mas
 
 script:
-  - bats tests
+  - bats test

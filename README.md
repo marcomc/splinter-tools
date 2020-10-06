@@ -4,22 +4,22 @@ Additional tools for Splinter provisioning
 
 # Unit testing
 
-BATS scripts are contained in './tests'
+BATS scripts are contained in './test'
 
-    bats ./tests
+    bats ./test
 
 ## Setup
 
 ### install bats-core ('/usr/local/bin/bats')
 brew install bats-core
 ### add submodules to a project
-    git submodule add https://github.com/ztombol/bats-support tests/test_helper/bats-support
-    git submodule add https://github.com/bats-core/bats-assert  tests/test_helper/bats-assert
-    git submodule add https://github.com/bats-core/bats-file  tests/test_helper/bats-file
+    git submodule add https://github.com/ztombol/bats-support test/test_helper/bats-support
+    git submodule add https://github.com/bats-core/bats-assert  test/test_helper/bats-assert
+    git submodule add https://github.com/bats-core/bats-file  test/test_helper/bats-file
     git commit -m 'Add bats-support/assert/file libraries'
 
 ### Load a library from the 'test_helper' directory.
-    # file: tests/test_helper.sh
+    # file: test/test_helper.sh
     #   $1 - name of library to load
     load_lib() {
       local name="$1"

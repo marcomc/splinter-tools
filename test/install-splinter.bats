@@ -5,7 +5,7 @@ function setup {
   splinter_dir='./splinter'
   splinter_script="$splinter_dir/splinter"
   splinter_tools_dir="$splinter_dir/tools"
-  splinter_tests_dir="$splinter_dir/tests"
+  splinter_test_dir="$splinter_dir/test"
   splinter_travis_config="$splinter_dir/.travis.yml"
   splinter_gitignore="$splinter_dir/.gitignore"
   splinter_gitmodules="$splinter_dir/.gitmodules"
@@ -27,7 +27,7 @@ function teardown {
   run ./install-splinter
   assert_dir_exist       "$splinter_dir"
   assert_dir_exist       "$splinter_tools_dir"
-  assert_dir_not_exist   "$splinter_tests_dir"
+  assert_dir_not_exist   "$splinter_test_dir"
   assert_file_not_exist  "$splinter_travis_config"
   assert_file_not_exist  "$splinter_gitignore"
   assert_file_not_exist  "$splinter_gitmodules"
