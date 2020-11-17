@@ -24,7 +24,7 @@ EOF
 }
 
 function setup_environment {
-  [[ -z $macprefs_repo ]] && macprefs_repo='https://github.com/marcomc/macprefs'
+  [[ -z $macprefs_repo ]] && macprefs_repo='https://github.com/clintmod/macprefs'
   [[ -z $macprefs_dir ]] && macprefs_dir='./macprefs'
   [[ -z $backup_dir ]] && backup_dir='./system_preferences' # default destination if no '-d' is specified
   macprefs_tool="${macprefs_dir}/macprefs"

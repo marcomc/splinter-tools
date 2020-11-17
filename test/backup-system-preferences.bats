@@ -5,14 +5,14 @@ function setup {
   TEST_TEMP_DIR="$(mktemp -d)"
   macprefs_archive='macprefs.zip'
 
-  custom_macprefs_repo='https://github.com/marcomc/macprefs'
+  custom_macprefs_repo='https://github.com/clintmod/macprefs'
   custom_macprefs_dir="${TEST_TEMP_DIR}/macprefs"
   custom_backup_dir="${TEST_TEMP_DIR}/custom_backup_directory"
 
   default_macprefs_dir='./macprefs'
   default_backup_dir='./system_preferences'
 
-  incorrect_macprefs_repo='https://github.com/marcomc/macprefs/tree/test'
+  incorrect_macprefs_repo='https://github.com/clintmod/macprefs/tree/test'
 }
 
 function teardown {
